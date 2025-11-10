@@ -24,7 +24,9 @@
     --transition-speed: 0.5s;
 
 }
-
+html {
+    overflow: hidden;
+}
 body {
     background-color: var(--cor5);
     font-family: var(--fonte-geral);
