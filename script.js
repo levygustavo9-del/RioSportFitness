@@ -135,3 +135,21 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   });
 });
+// ==================== MUDANÇA DO CALÉNDARIO ====================
+
+// Ativa o calendário Flatpickr
+flatpickr("#nascimento", {
+  dateFormat: "d/m/Y",          // formato que será salvo (dia/mês/ano)
+  altInput: true,               // mostra o campo formatado visualmente
+  altFormat: "d/m/Y",           // formato exibido no campo
+  maxDate: "today",             // impede escolher datas futuras
+  minDate: "1930-01-01",        // limite mínimo
+  locale: "pt",                 // traduz para português
+  yearRange: [1930, new Date().getFullYear()], // faixa de anos
+  disableMobile: true,          // força o uso do Flatpickr mesmo em celular
+  allowInput: true,
+  onReady: function(SelectedDates, dateStr, instance) {
+    //Abre o seltor de ano e mês automaticamente
+    instance.currentYearElement.parentNode.Style.display = "flex"
+  }          // nenhum valor padrão
+});

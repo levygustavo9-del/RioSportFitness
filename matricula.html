@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Flatpickr CSS e JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 
 <body>
@@ -60,7 +63,7 @@
     <input type="text" name="cpf" required>
 
     <label>Data de nascimento:</label>
-    <input type="date" id="nascimento" name="nascimento" required>
+    <input type="text" id="nascimento" name="nascimento" required>
 
     <label>Telefone:</label>
     <input type="tel" name="telefone" placeholder="(00) 00000-0000" required>
@@ -78,9 +81,14 @@
     <button type="submit">Enviar</button>
   </form>
 
-  <!-- EmailJS -->
+  <!--Animação-->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <!--Calendario-->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+
   <script src="script.js"></script>
 
 </body>
