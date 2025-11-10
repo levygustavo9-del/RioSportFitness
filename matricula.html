@@ -60,7 +60,7 @@
     <input type="text" name="cpf" required>
 
     <label>Data de nascimento:</label>
-    <input type="date" name="nascimento" required>
+    <input type="date" id="nascimento" name="nascimento" required>
 
     <label>Telefone:</label>
     <input type="tel" name="telefone" placeholder="(00) 00000-0000" required>
@@ -69,13 +69,7 @@
     <textarea name="objetivo" placeholder="Ex: Ganhar massa magra" required></textarea>
 
     <label>Horário desejado para avaliação:</label>
-    <input type="datetime-local" 
-    name="horario"
-    id="horario"
-    min="2025-11-10T07:00"
-    max="2025-12-31T11/00"
-    step="1800" 
-    required>  <!--o step da um intervalo de 30min-->
+    <select id="horario" name="horario" required></select> 
 
     <label>
       <input type="checkbox" required> Aceito os termos da matrícula

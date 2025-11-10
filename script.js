@@ -1,4 +1,4 @@
-// MENU HAMBÚRGUER
+// ==================== MENU HAMBÚRGUER ====================
 const hamburger = document.getElementById('hamburger-icon');
 const closeIcon = document.getElementById('close-icon');
 const menuMobile = document.getElementById('menu-mobile-panel');
@@ -24,13 +24,13 @@ window.addEventListener('resize', () => {
   }
 });
 
-// ANIMAÇÕES AOS
+// ==================== ANIMAÇÕES AOS ====================
 AOS.init({
   duration: 1000,
   once: true
 });
 
-// FORMULÁRIO DE PRÉ-MATRÍCULA
+// ==================== FUNÇÕES AUXILIARES ====================
 function formatarDataHora(valor) {
   const data = new Date(valor);
   const dataFormatada = data.toLocaleDateString('pt-BR');
@@ -38,53 +38,95 @@ function formatarDataHora(valor) {
   return `${dataFormatada} às ${horaFormatada}`;
 }
 
+function formatarData(valor) {
+  const data = new Date(valor);
+  return data.toLocaleDateString('pt-BR');
+}
+
+// ==================== FORMULÁRIO DE PRÉ-MATRÍCULA ====================
 document.addEventListener("DOMContentLoaded", function() {
   emailjs.init("P6ayYWMRJy0MVD3v2"); // sua Public Key
 
   const form = document.getElementById("matriculaForm");
-  const horarioInput = document.getElementById("horario");
+  const horarioSelect = document.getElementById("horario");
 
-  // ⛔️ Bloqueia domingos e horários inválidos
-  horarioInput.addEventListener("change", function() {
-    const dataSelecionada = new Date(this.value);
-    const diaSemana = dataSelecionada.getUTCDay(); // 0 = domingo
-    const hora = dataSelecionada.getHours();
-
-    if (diaSemana === 0) {
-      alert("⚠️ A academia não realiza avaliações aos domingos. Escolha outro dia.");
-      this.value = "";
-      return;
+  // 🗓️ Função para gerar horários entre 07h e 11h, de 30 em 30 minutos
+  function gerarHorariosDisponiveis() {
+    const horarios = [];
+    for (let hora = 7; hora < 11; hora++) {
+      horarios.push(`${hora.toString().padStart(2, '0')}:00`);
+      horarios.push(`${hora.toString().padStart(2, '0')}:30`);
     }
+    return horarios;
+  }
 
-    // Limite de horários — apenas entre 7h e 20h
-    if (hora < 7 || hora >  11 ) {
-      alert("⚠️ Os horários disponíveis são das 07:00 às 11:00.");
-      this.value = "";
-    }
-  });
+  // 🔒 Horários já ocupados (pode vir do localStorage ou API futuramente)
+  const horariosOcupados = JSON.parse(localStorage.getItem("horariosOcupados")) || [
+    "2025-11-10T08:00",
+    "2025-11-10T09:30",
+    "2025-11-11T10:00"
+  ];
 
-  // Envio do formulário
+  // 🕒 Gera automaticamente os horários disponíveis (de amanhã até 30 dias)
+  const hoje = new Date();
+  const amanha = new Date(hoje);
+  amanha.setDate(hoje.getDate() + 1);
+
+  const limite = new Date(hoje);
+  limite.setDate(hoje.getDate() + 30);
+
+  horarioSelect.innerHTML = "";
+
+  for (let dia = new Date(amanha); dia <= limite; dia.setDate(dia.getDate() + 1)) {
+    if (dia.getDay() === 0) continue; // pula domingos
+
+    const dataISO = dia.toISOString().split("T")[0];
+    const horarios = gerarHorariosDisponiveis();
+
+    horarios.forEach(hora => {
+      const [h, m] = hora.split(":");
+      const horarioCompleto = `${dataISO}T${h}:${m}`;
+
+      if (!horariosOcupados.includes(horarioCompleto)) {
+        const option = document.createElement("option");
+        option.value = horarioCompleto;
+        option.textContent = `${dia.toLocaleDateString('pt-BR')} às ${hora}`;
+        horarioSelect.appendChild(option);
+      }
+    });
+  }
+
+  // ==================== ENVIO DO FORMULÁRIO ====================
   form.addEventListener("submit", function(event) {
     event.preventDefault();
+
+    if (!this.horario.value) {
+      alert("⚠️ Escolha um horário disponível para o atendimento.");
+      return;
+    }
 
     const formData = {
       nome: this.nome.value,
       email: this.email.value,
       cpf: this.cpf.value,
-      nascimento: this.nascimento.value,
+      nascimento: formatarData(this.nascimento.value),
       telefone: this.telefone.value,
       objetivo: this.objetivo.value,
       horario: formatarDataHora(this.horario.value)
     };
 
-    // 1️⃣ Envia para a academia
+    // ✅ Adiciona o novo horário como ocupado
+    horariosOcupados.push(this.horario.value);
+    localStorage.setItem("horariosOcupados", JSON.stringify(horariosOcupados));
+
+    // 1️⃣ Envia o e-mail para a academia
     emailjs.send("service_hl3g14c", "template_zegyadw", formData)
       .then(() => {
         // 2️⃣ Envia confirmação para o aluno
         return emailjs.send("service_hl3g14c", "template_s7weu6o", formData);
       })
       .then(() => {
-        alert(`✅ Pré-matrícula de ${formData.nome} enviada com sucesso! Um e-mail de confirmação foi enviado para ${formData.email}.`);
+        alert(`✅ Pré-matrícula de ${formData.nome} enviada com sucesso! Um e-mail foi enviado para ${formData.email}.`);
         form.reset();
       })
       .catch((erro) => {
