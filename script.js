@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
     emailjs.send("service_hl3g14c", "template_zegyadw", formData)
       .then(() => {
         // 2️⃣ Envia confirmação para o aluno
-        return emailjs.send("service_hl3g14c", "template_s7weu6o", formData);
+        return emailjs.send("service_hl3g14c", "template_itda5kx", formData);
       })
       .then(() => {
         alert(`✅ Pré-matrícula de ${formData.nome} enviada com sucesso! Um e-mail foi enviado para ${formData.email}.`);
