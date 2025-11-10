@@ -135,21 +135,36 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   });
 });
-// ==================== MUDANÇA DO CALÉNDARIO ====================
 
-// Ativa o calendário Flatpickr
 flatpickr("#nascimento", {
-  dateFormat: "d/m/Y",          // formato que será salvo (dia/mês/ano)
-  altInput: true,               // mostra o campo formatado visualmente
-  altFormat: "d/m/Y",           // formato exibido no campo
-  maxDate: "today",             // impede escolher datas futuras
-  minDate: "1930-01-01",        // limite mínimo
-  locale: "pt",                 // traduz para português
+  // formato interno e visual
+  dateFormat: "Y-m-d",        // formato interno correto para o Flatpickr
+  altInput: true,             // mostra um campo visual separado
+  altFormat: "d/m/Y",         // formato exibido ao usuário
+  maxDate: "today",           // bloqueia datas futuras
+  minDate: "1930-01-01",      // limite mínimo
+  locale: "pt",               // tradução para português
+  disableMobile: true,        // força uso no celular
+  allowInput: true,           // permite digitar manualmente
+  monthSelectorType: "dropdown", // mostra menu de mês/ano
   yearRange: [1930, new Date().getFullYear()], // faixa de anos
-  disableMobile: true,          // força o uso do Flatpickr mesmo em celular
-  allowInput: true,
-  onReady: function(SelectedDates, dateStr, instance) {
-    //Abre o seltor de ano e mês automaticamente
-    instance.currentYearElement.parentNode.Style.display = "flex"
-  }          // nenhum valor padrão
+
+  onReady: function(selectedDates, dateStr, instance) {
+    // exibe o seletor de mês e ano lado a lado
+    const calendarContainer = instance.calendarContainer;
+    const monthDropdown = calendarContainer.querySelector(".flatpickr-monthDropdown-months");
+    const yearInput = calendarContainer.querySelector(".numInputWrapper");
+    if (monthDropdown && yearInput) {
+      monthDropdown.style.display = "inline-block";
+      yearInput.style.display = "inline-block";
+    }
+  },
+
+  // converte automaticamente quando o usuário digitar no formato BR
+  onValueUpdate: function(selectedDates, dateStr, instance) {
+    if (dateStr && dateStr.includes("/")) {
+      const [dia, mes, ano] = dateStr.split("/");
+      instance.setDate(`${ano}-${mes}-${dia}`, true, "Y-m-d");
+    }
+  }
 });
