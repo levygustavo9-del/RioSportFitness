@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia | Pré-Matrícula</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header class="container">
+    <div class="logo">
+      <img src="img/logo.png" alt="RioSportFitness Logo" style="width: 150px;">
+    </div>
+
+    <div class="hamburger" id="hamburger-icon">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <nav class="nav">
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="plano.html">Planos</a></li>
+        <li><a href="profissionais.html">Profissionais</a></li>
+        <li><a href="#localizacao">Localização</a></li>
+        <li><a href="#" class="btn">Contato</a></li>
+      </ul>
+    </nav>
+
+    <div class="menu-mobile" id="menu-mobile-panel">
+      <div class="close-icon" id="close-icon">
+        <i class="fas fa-times"></i>
+      </div>
+      <nav>
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="plano.html">Planos</a></li>
+          <li><a href="profissionais.html">Profissionais</a></li>
+          <li><a href="#localizacao">Localização</a></li>
+          <li><a href="#" class="btn">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <form id="matriculaForm">
+    <h2>Formulário de Pré-Matrícula</h2>
+
+    <label>Nome completo:</label>
+    <input type="text" name="nome" required>
+
+    <label>E-mail:</label> <!-- 🟢 Campo adicionado -->
+    <input type="email" name="email" placeholder="exemplo@dominio.com" required>
+
+    <label>CPF:</label>
+    <input type="text" name="cpf" required>
+
+    <label>Data de nascimento:</label>
+    <input type="date" name="nascimento" required>
+
+    <label>Telefone:</label>
+    <input type="tel" name="telefone" placeholder="(00) 00000-0000" required>
+
+    <label>Objetivo:</label>
+    <textarea name="objetivo" placeholder="Ex: Ganhar massa magra" required></textarea>
+
+    <label>Horário desejado para avaliação:</label>
+    <input type="datetime-local" 
+    name="horario"
+    id="horario"
+    min="2025-11-10T07:00"
+    max="2025-12-31T11/00"
+    step="1800" 
+    required>  <!--o step da um intervalo de 30min-->
+
+    <label>
+      <input type="checkbox" required> Aceito os termos da matrícula
+    </label>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <!-- EmailJS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
