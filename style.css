@@ -768,7 +768,7 @@ a {
     }
     
     .link-localzacao, .link-localzacao p {
-        font-size: 0.9em;
+        font-size: 1.2em;
     }
 
     /* Rodapé */
@@ -864,6 +864,7 @@ a {
         width: 80%;
         height: 350px;
     }
+   
 }
 
 /* --- Laptops/Desktops Pequenos (min-width: 1024px e max-width: 1366px) --- */
