@@ -119,20 +119,20 @@ document.addEventListener("DOMContentLoaded", function() {
     horariosOcupados.push(this.horario.value);
     localStorage.setItem("horariosOcupados", JSON.stringify(horariosOcupados));
 
-    // 1️⃣ Envia o e-mail para a academia
-    emailjs.send("service_hl3g14c", "template_zegyadw", formData)
-      .then(() => {
-        // 2️⃣ Envia confirmação para o aluno
-        return emailjs.send("service_hl3g14c", "template_itda5kx", formData);
-      })
-      .then(() => {
-        alert(`✅ Pré-matrícula de ${formData.nome} enviada com sucesso! Um e-mail foi enviado para ${formData.email}.`);
-        form.reset();
-      })
-      .catch((erro) => {
-        console.error("❌ Erro ao enviar:", erro);
-        alert("❌ Ocorreu um erro ao enviar a pré-matrícula. Verifique sua conexão e tente novamente.");
-      });
+   // 1️⃣ Envia o e-mail para a academia
+    emailjs.send("service_hl3g14c", "template_zegyadw", formData);
+
+    // 2️⃣ Envia o e-mail de confirmação para o aluno
+    emailjs.send("service_hl3g14c", "template_itda5kx", formData)
+    .then(() => {
+    alert(`✅ Pré-matrícula de ${formData.nome} enviada com sucesso! Um e-mail foi enviado para ${formData.email}.`);
+    form.reset();
+  })
+  .catch((erro) => {
+    console.error("❌ Erro ao enviar:", erro);
+    alert("❌ Ocorreu um erro ao enviar a pré-matrícula. Verifique sua conexão e tente novamente.");
+  });
+
   });
 });
 // ==============MELHORIA DO CALENDARIO DE NASCIMENTO====================
