@@ -1326,3 +1326,119 @@ a {
         padding: 12px;
     }
 }
+
+/* ============================
+   CHECKBOX DOS TERMOS — MINIMALISTA
+============================ */
+.termos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 25px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.termos p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.termos input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #007bff; /* deixa o check azul elegante */
+  cursor: pointer;
+}
+
+.termos label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.termos a {
+  color: #007bff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s;
+  margin-bottom: 20px;
+}
+
+.termos a:hover {
+  text-decoration: underline;
+}
+
+/* ============================
+   MODAL MINIMALISTA — TERMOS
+============================ */
+.modal-termos {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45); /* mais suave */
+  backdrop-filter: blur(4px); /* efeito vidro fosco */
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-termos-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  padding: 30px 32px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  animation: modalFade 0.25s ease;
+}
+
+/* Animação minimalista */
+@keyframes modalFade {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* X mais elegante */
+.modal-fechar {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 26px;
+  color: #666;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.modal-fechar:hover {
+  color: #000;
+}
+
+/* Títulos mais minimalistas */
+.modal-termos-content h2 {
+  font-size: 20px;
+  margin-bottom: 18px;
+  color: #111;
+  font-weight: 600;
+}
+
+/* Texto interno mais harmonioso */
+.modal-termos-content p,
+.modal-termos-content li {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.modal-termos-content ol {
+  margin-left: 18px;
+}
+
+.modal-termos-content ol li {
+  margin-bottom: 8px;
+}

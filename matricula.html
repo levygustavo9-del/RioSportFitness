@@ -72,14 +72,39 @@
     <textarea name="objetivo" placeholder="Ex: Ganhar massa magra" required></textarea>
 
     <label>Horário desejado para avaliação:</label>
-    <select id="horario" name="horario" required></select> 
+    <select id="horario" name="horario" required></select>
 
-    <label>
-      <input type="checkbox" required> Aceito os termos da matrícula
-    </label>
+    <!-- CHECKBOX + LINK DOS TERMOS DENTRO DO FORM -->
+    <div class="termos">
+      <input type="checkbox" id="termos" name="termos" value="Aceitou os termos" required>
+      <label for="termos">
+        <p>Aceito os</p>
+        <a href="#" id="abrir-termos">Termos e Condições</a>
+      </label>
+    </div>
+
+    <div id="modal-termos" class="modal-termos">
+      <div class="modal-termos-content">
+        <span id="fechar-termos" class="modal-fechar">&times;</span>
+
+        <h2>Termos e Condições da Pré-Matrícula</h2>
+        <p>Ao enviar este formulário, declaro que:</p>
+
+        <ol>
+          <li>As informações fornecidas são verdadeiras.</li>
+          <li>A pré-matrícula não garante vaga até confirmação presencial.</li>
+          <li>A academia poderá entrar em contato para orientações e confirmação.</li>
+          <li>Estou apto(a) a realizar atividades físicas.</li>
+          <li>Autorizo o uso dos meus dados somente para comunicação referente à matrícula.</li>
+        </ol>
+      </div>
+    </div>
+
+
 
     <button type="submit">Enviar</button>
   </form>
+
 
   <!--Animação-->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

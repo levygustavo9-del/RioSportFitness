@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
       nascimento: this.nascimento.value,
       telefone: this.telefone.value,
       objetivo: this.objetivo.value,
-
+      termos: this.termos.checked ? "Aceitou os termos" : "Não aceitou",
       assunto: "Aula Experimental - Rio Sport Fitness",
       texto: "Recebemos sua solicitação de aula experimental! Entraremos em contato!"
     };
@@ -56,13 +56,25 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-// ==================== CALENDÁRIO DE NASCIMENTO ====================
-flatpickr("#nascimento", {
-  dateFormat: "Y-m-d",
-  altInput: true,
-  altFormat: "d/m/Y",
-  maxDate: "today",
-  minDate: "1930-01-01",
-  locale: "pt",
-  disableMobile: true
+
+//==================== Termos e condições =====================
+const modal = document.getElementById("modal-termos");
+const abrir = document.getElementById("abrir-termos");
+const fechar = document.getElementById("fechar-termos");
+
+abrir.addEventListener("click", (e) => {
+  e.preventDefault();
+  modal.style.display = "flex";
 });
+
+fechar.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+

@@ -2,91 +2,113 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academia | Pré-Matrícula</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <!-- Flatpickr CSS e JS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia | Pré-Matrícula</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Flatpickr CSS e JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 
 <body>
 
-  <header class="container">
-    <div class="logo">
-      <a href="index.html"><img src="img/logo.png" alt="RioSportFitness Logo" style="width: 150px;"></a>
+    <header class="container">
+        <div class="logo">
+            <a href="index.html"><img src="img/logo.png" alt="RioSportFitness Logo" style="width: 150px;"></a>
+        </div>
+
+        <div class="hamburger" id="hamburger-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav class="nav">
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="plano.html">Planos</a></li>
+                <li><a href="profissionais.html">Profissionais</a></li>
+                <li><a href="index.html#localizacao">Localização</a></li>
+                <li><a href="#" class="btn">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="menu-mobile" id="menu-mobile-panel">
+            <div class="close-icon" id="close-icon">
+                <i class="fas fa-times"></i>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="plano.html">Planos</a></li>
+                    <li><a href="profissionais.html">Profissionais</a></li>
+                    <li><a href="index.html#localizacao">Localização</a></li>
+                    <li><a href="#" class="btn">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <form id="matriculaForm">
+        <h2>Formulário de Aula Experimental</h2>
+
+        <label>Nome completo:</label>
+        <input type="text" name="nome" required>
+
+        <label>E-mail:</label> <!-- 🟢 Campo adicionado -->
+        <input type="email" name="email" placeholder="exemplo@dominio.com" required>
+
+        <label>CPF:</label>
+        <input type="text" name="cpf" required>
+
+        <label>Data de nascimento:</label>
+        <input type="text" id="nascimento" name="nascimento" required>
+
+        <label>Telefone:</label>
+        <input type="tel" name="telefone" placeholder="(00) 00000-0000" required>
+
+        <label>Objetivo:</label>
+        <textarea name="objetivo" placeholder="Ex: Ganhar massa magra" required></textarea>
+
+         <!-- CHECKBOX + LINK DOS TERMOS DENTRO DO FORM -->
+    <div class="termos">
+      <input type="checkbox" id="termos" name="termos" value="Aceitou os termos" required>
+      <label for="termos">
+        <p>Aceito os</p>
+        <a href="#" id="abrir-termos">Termos e Condições</a>
+      </label>
     </div>
 
-    <div class="hamburger" id="hamburger-icon">
-      <i class="fas fa-bars"></i>
-    </div>
+    <div id="modal-termos" class="modal-termos">
+      <div class="modal-termos-content">
+        <span id="fechar-termos" class="modal-fechar">&times;</span>
 
-    <nav class="nav">
-      <ul class="menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="plano.html">Planos</a></li>
-        <li><a href="profissionais.html">Profissionais</a></li>
-        <li><a href="index.html#localizacao">Localização</a></li>
-        <li><a href="#" class="btn">Contato</a></li>
-      </ul>
-    </nav>
+        <h2>Termos e Condições da Pré-Matrícula</h2>
+        <p>Ao enviar este formulário, declaro que:</p>
 
-    <div class="menu-mobile" id="menu-mobile-panel">
-      <div class="close-icon" id="close-icon">
-        <i class="fas fa-times"></i>
+        <ol>
+          <li>As informações fornecidas são verdadeiras.</li>
+          <li>A pré-matrícula não garante vaga até confirmação presencial.</li>
+          <li>A academia poderá entrar em contato para orientações e confirmação.</li>
+          <li>Estou apto(a) a realizar atividades físicas.</li>
+          <li>Autorizo o uso dos meus dados somente para comunicação referente à matrícula.</li>
+        </ol>
       </div>
-      <nav>
-        <ul class="menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="plano.html">Planos</a></li>
-          <li><a href="profissionais.html">Profissionais</a></li>
-          <li><a href="index.html#localizacao">Localização</a></li>
-          <li><a href="#" class="btn">Contato</a></li>
-        </ul>
-      </nav>
     </div>
-  </header>
 
-  <form id="matriculaForm">
-    <h2>Formulário de Aula Experimental</h2>
+        <button type="submit">Enviar</button>
+    </form>
 
-    <label>Nome completo:</label>
-    <input type="text" name="nome" required>
+    <!--Animação-->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!--Calendario-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
-    <label>E-mail:</label> <!-- 🟢 Campo adicionado -->
-    <input type="email" name="email" placeholder="exemplo@dominio.com" required>
-
-    <label>CPF:</label>
-    <input type="text" name="cpf" required>
-
-    <label>Data de nascimento:</label>
-    <input type="text" id="nascimento" name="nascimento" required>
-
-    <label>Telefone:</label>
-    <input type="tel" name="telefone" placeholder="(00) 00000-0000" required>
-
-    <label>Objetivo:</label>
-    <textarea name="objetivo" placeholder="Ex: Ganhar massa magra" required></textarea>
-    
-    <label>
-      <input type="checkbox" required> Aceito os termos
-    </label>
-
-    <button type="submit">Enviar</button>
-  </form>
-
-  <!--Animação-->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <!--Calendario-->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
-
-  <script src="aula.js"></script>
+    <script src="aula.js"></script>
 
 </body>
 

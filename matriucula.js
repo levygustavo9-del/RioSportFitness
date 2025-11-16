@@ -74,7 +74,11 @@ document.addEventListener("DOMContentLoaded", function() {
   for (let dia = new Date(amanha); dia <= limite; dia.setDate(dia.getDate() + 1)) {
     if (dia.getDay() === 0) continue;
 
-    const dataISO = dia.toISOString().split("T")[0];
+    const dataISO = 
+      dia.getFullYear() + "-" +
+      String(dia.getMonth() + 1).padStart(2, "0") + "-" +
+      String(dia.getDate()).padStart(2, "0");
+
     const horarios = gerarHorarios();
 
     horarios.forEach(hora => {
@@ -108,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
       objetivo: this.objetivo.value,
       horario: formatarDataHora(this.horario.value),
       assunto: "Pré-Matrícula - Rio Sport Fitness",
+      termos: this.termos.checked ? "Aceitou os termos" : "Não aceitou",
       texto: "Recebemos sua pré-matrícula e entraremos em contato em breve!"
     };
 
@@ -149,3 +154,36 @@ flatpickr("#nascimento", {
     }
   }
 });
+
+// ==================== CALENDÁRIO DE NASCIMENTO ====================
+flatpickr("#nascimento", {
+  dateFormat: "Y-m-d",
+  altInput: true,
+  altFormat: "d/m/Y",
+  maxDate: "today",
+  minDate: "1930-01-01",
+  locale: "pt",
+  disableMobile: true
+});
+
+
+//==================== Termos e condições =====================
+const modal = document.getElementById("modal-termos");
+const abrir = document.getElementById("abrir-termos");
+const fechar = document.getElementById("fechar-termos");
+
+abrir.addEventListener("click", (e) => {
+  e.preventDefault();
+  modal.style.display = "flex";
+});
+
+fechar.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
