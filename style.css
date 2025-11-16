@@ -1333,21 +1333,22 @@ a {
 .termos {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin: 25px 0;
   font-size: 15px;
   color: #333;
+  flex-wrap: wrap; /* evita quebra feia no mobile */
 }
 
 .termos p {
-    font-size: 1.5em;
-    margin-bottom: 20px;
+  margin-bottom: 17px;
+  font-size: 1.4em;
 }
 
 .termos input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #007bff; /* deixa o check azul elegante */
+  accent-color: #007bff;
   cursor: pointer;
 }
 
@@ -1355,15 +1356,17 @@ a {
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-width: 90%;
 }
 
 .termos a {
   color: #007bff;
   font-weight: 500;
+  margin-bottom: 17px;
   text-decoration: none;
   transition: 0.2s;
-  margin-bottom: 20px;
 }
 
 .termos a:hover {
@@ -1377,19 +1380,19 @@ a {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45); /* mais suave */
-  backdrop-filter: blur(4px); /* efeito vidro fosco */
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
   z-index: 9999;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 16px;
 }
 
 .modal-termos-content {
   background: #ffffff;
   width: 100%;
   max-width: 520px;
-  max-height: 85vh;
+  max-height: 80vh;
   overflow-y: auto;
   border-radius: 16px;
   padding: 30px 32px;
@@ -1419,7 +1422,7 @@ a {
   color: #000;
 }
 
-/* Títulos mais minimalistas */
+/* Títulos minimalistas */
 .modal-termos-content h2 {
   font-size: 20px;
   margin-bottom: 18px;
@@ -1427,7 +1430,7 @@ a {
   font-weight: 600;
 }
 
-/* Texto interno mais harmonioso */
+/* Texto interno */
 .modal-termos-content p,
 .modal-termos-content li {
   font-size: 15px;
@@ -1441,4 +1444,76 @@ a {
 
 .modal-termos-content ol li {
   margin-bottom: 8px;
+}
+
+
+/* ============================
+   RESPONSIVIDADE
+============================ */
+
+/* ---- CELULARES MUITO PEQUENOS (até 360px) ---- */
+@media (max-width: 360px) {
+  .modal-termos {
+    padding: 10px;
+  }
+
+  .modal-termos-content {
+    padding: 20px;
+    max-height: 85vh;
+    border-radius: 12px;
+  }
+
+  .modal-termos-content h2 {
+    font-size: 18px;
+  }
+
+  .modal-termos-content p,
+  .modal-termos-content li {
+    font-size: 14px;
+  }
+}
+
+/* ---- CELULARES MÉDIOS/GRANDES (361px até 480px) ---- */
+@media (max-width: 480px) {
+  .modal-termos-content {
+    max-width: 95%;
+    padding: 24px;
+  }
+
+  .termos {
+    flex-direction: row;
+    gap: 6px;
+  }
+}
+
+/* ---- TABLETS (481px até 768px) ---- */
+@media (max-width: 768px) {
+  .modal-termos-content {
+    max-width: 600px;
+    padding: 28px;
+  }
+}
+
+/* ---- DESKTOPS COMUNS (769px até 1440px) ---- */
+@media (min-width: 769px) and (max-width: 1440px) {
+  .modal-termos-content {
+    max-width: 560px;
+  }
+}
+
+/* ---- TELAS GRANDES E TV (1441px +) ---- */
+@media (min-width: 1441px) {
+  .modal-termos-content {
+    max-width: 700px;
+    padding: 40px 48px;
+  }
+
+  .modal-termos-content h2 {
+    font-size: 24px;
+  }
+
+  .modal-termos-content p,
+  .modal-termos-content li {
+    font-size: 17px;
+  }
 }
