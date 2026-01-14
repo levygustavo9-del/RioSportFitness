@@ -1,12 +1,18 @@
-/* ================= FIREBASE ================= */
-
+/* ================= FIREBASE (Configuração Correta para HTML) ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyARYVgimtj7_-AGclaV1qvaQRXJecyNgdM",
   authDomain: "datahora-73183.firebaseapp.com",
-  projectId: "datahora-73183"
+  projectId: "datahora-73183",
+  storageBucket: "datahora-73183.firebasestorage.app",
+  messagingSenderId: "70731944657",
+  appId: "1:70731944657:web:fb79aff377b126f0ed3470",
+  measurementId: "G-DVH152XWK3"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Inicializa o Firebase (Padrão Compat/CDN)
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.firestore();
 
 /* ================= EMAILJS ================= */
