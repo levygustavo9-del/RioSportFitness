@@ -1,0 +1,125 @@
+/* ================= FIREBASE ================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARYVgimtj7_-AGclaV1qvaQRXJecyNgdM",
+  authDomain: "datahora-73183.firebaseapp.com",
+  projectId: "datahora-73183"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* ================= EMAILJS ================= */
+
+emailjs.init("P6ayYWMRJy0MVD3v2");
+
+/* ================= UTIL ================= */
+
+function gerarHorarios() {
+  const h = [];
+  for (let i = 7; i < 11; i++) {
+    h.push(`${String(i).padStart(2, "0")}:00`);
+    h.push(`${String(i).padStart(2, "0")}:30`);
+  }
+  return h;
+}
+
+function formatarDataHora(valor) {
+  const d = new Date(valor);
+  return `${d.toLocaleDateString("pt-BR")} às ${d.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit"
+  })}`;
+}
+
+/* ================= FIRESTORE ================= */
+
+async function buscarOcupados(dataISO) {
+  const snap = await db
+    .collection("agendamentos")
+    .doc(dataISO)
+    .collection("horarios")
+    .get();
+
+  return snap.docs.map(doc => doc.id);
+}
+
+async function salvarHorario(dataISO, hora) {
+  return db
+    .collection("agendamentos")
+    .doc(dataISO)
+    .collection("horarios")
+    .doc(hora)
+    .set({
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
+/* ================= DOM ================= */
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  const form = document.getElementById("matriculaForm");
+  const horarioSelect = document.getElementById("horario");
+
+  async function carregarHorarios() {
+    horarioSelect.innerHTML = "";
+
+    const hoje = new Date();
+
+    for (let d = 1; d <= 30; d++) {
+      const dia = new Date();
+      dia.setDate(hoje.getDate() + d);
+      if (dia.getDay() === 0) continue;
+
+      const dataISO = dia.toISOString().split("T")[0];
+      const ocupados = await buscarOcupados(dataISO);
+
+      gerarHorarios().forEach(hora => {
+        if (!ocupados.includes(hora)) {
+          const opt = document.createElement("option");
+          opt.value = `${dataISO}T${hora}`;
+          opt.textContent = `${dia.toLocaleDateString("pt-BR")} às ${hora}`;
+          horarioSelect.appendChild(opt);
+        }
+      });
+    }
+  }
+
+  if (horarioSelect) await carregarHorarios();
+
+  if (form) {
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+
+      if (!horarioSelect.value) {
+        alert("⚠️ Escolha um horário.");
+        return;
+      }
+
+      const [dataISO, hora] = horarioSelect.value.split("T");
+
+      try {
+        await salvarHorario(dataISO, hora);
+      } catch {
+        alert("❌ Horário já ocupado.");
+        carregarHorarios();
+        return;
+      }
+
+      const dados = {
+        nome: form.nome.value,
+        email: form.email.value,
+        telefone: form.telefone.value,
+        horario: formatarDataHora(horarioSelect.value)
+      };
+
+      await emailjs.send("service_hl3g14c", "template_zegyadw", dados);
+      await emailjs.send("service_hl3g14c", "template_itda5kx", dados);
+
+      alert("✅ Pré-matrícula enviada!");
+      form.reset();
+      carregarHorarios();
+    });
+  }
+});
