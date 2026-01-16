@@ -1021,9 +1021,13 @@ a {
     margin-bottom: 12px;
 }
 
+.transform-card .nome {
+    color: var(--cor1);
+}
+
 .transform-card p {
     font-family: var(--fonte-geral);
-    font-size: 2rem;
+    font-size: 1.9rem;
     color: #ffffff;
     max-width: 680px;
     margin: auto;
@@ -2182,6 +2186,10 @@ a {
     animation: modalFade 0.25s ease;
 }
 
+.modal-termos.active {
+    display: flex;
+}
+
 /* Animação minimalista */
 @keyframes modalFade {
     from {
@@ -2205,6 +2213,7 @@ a {
     cursor: pointer;
     transition: 0.2s;
 }
+
 
 .modal-fechar:hover {
     color: #000;

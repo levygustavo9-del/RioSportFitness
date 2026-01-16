@@ -150,6 +150,47 @@ document.addEventListener("keydown", e => {
 });
 
 /* =======================================================
+   MODAL TERMOS E CONDIÇÕES
+   ======================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const abrirTermos = document.getElementById("abrir-termos");
+  const modalTermos = document.getElementById("modal-termos");
+  const fecharTermos = document.getElementById("fechar-termos");
+
+  if (!modalTermos || !abrirTermos) return;
+
+  abrirTermos.addEventListener("click", (e) => {
+    e.preventDefault();
+    modalTermos.classList.add("active");
+    document.body.style.overflow = "hidden";
+  });
+
+  fecharTermos.addEventListener("click", () => {
+    modalTermos.classList.remove("active");
+    document.body.style.overflow = "";
+  });
+
+  modalTermos.addEventListener("click", (e) => {
+    if (e.target === modalTermos) {
+      modalTermos.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modalTermos.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  });
+
+});
+
+
+
+/* =======================================================
    HEADER FIXO COM SCROLL
    ======================================================= */
 
