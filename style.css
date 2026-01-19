@@ -155,7 +155,7 @@ nav.nav ul {
     align-items: center;
 
     width: 100%;
-    padding: 0 5%;
+    padding: 0 ;
     margin: 0;
 }
 
@@ -286,6 +286,23 @@ nav.nav ul {
     margin-top: 15px;
     padding: 8px 30px;
     font-size: 1.2em;
+}
+
+.icone {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+.email img {
+    width: 40px;
+    margin: 14px 0 0 20px;
+}
+
+.instagram img {
+    width: 32px;
+    margin: 11px 0 0 20px !important;
 }
 
 .nav li {
@@ -1511,6 +1528,23 @@ a {
         right: 40px !important;
         top: 50% !important;
         transform: translateY(-48%) !important;
+    }
+
+    .icone {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 40px;
+    }
+
+    .email img {
+        width: 50px;
+        margin: 14px 0 0 20px;
+    }
+
+    .instagram img {
+        width: 40px;
+        margin: 14px 0 0 20px;
     }
 
     .nav {
