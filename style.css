@@ -155,7 +155,7 @@ nav.nav ul {
     align-items: center;
 
     width: 100%;
-    padding: 0 ;
+    padding: 0;
     margin: 0;
 }
 
@@ -1753,13 +1753,11 @@ a {
     margin-top: 0;
     background-color: rgb(0, 0, 0);
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .planos-section {
-    text-align: center;
     padding: 80px 5%;
     background-image: linear-gradient(to bottom,
             /* Direção: De cima para baixo */
@@ -1770,101 +1768,159 @@ a {
             #000000 100%
             /* 3. Fim (base) é a cor escura */
         );
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: -25px;
-}
-
-.titulo-secao {
-    font-size: 3rem;
-    color: var(--cor1);
-    margin-bottom: 10px;
-}
-
-.subtitulo-secao {
-    font-size: 1.4rem;
-    color: #ccc;
-    margin-bottom: 60px;
-}
-
-.planos-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
 }
 
-.plano-card {
-    background-color: rgba(4, 1, 20, 0.7);
-    color: white;
-    border: 1px solid var(--cor1);
+
+/* Card principal */
+.plano-simples {
+    position: relative;
+    max-width: 680px;
+    width: 100%;
+    padding: 45px 35px;
     border-radius: 20px;
-    padding: 40px 30px;
-    width: 320px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    background: rgba(1, 6, 38, 0.85);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
 }
 
-.plano-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 20px rgb(255, 217, 0);
+/* ===== LUZ ANIMADA AO REDOR DO CARD ===== */
+.plano-simples::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    padding: 2px;
+    background: linear-gradient(120deg,
+            transparent,
+            var(--cor1),
+            transparent,
+            var(--cor4),
+            transparent);
+    background-size: 300% 300%;
+    animation: glowBorder 6s linear infinite;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
-.plano-card.destaque {
-    background-image: linear-gradient(120deg, #c19309 0%, #dfaa0a 100%);
-    color: #010626;
-    transform: scale(1.05);
+@keyframes glowBorder {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 300% 50%;
+    }
 }
 
-.plano-card h3 {
-    font-size: 1.9rem;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.plano-card .preco {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 20px;
-}
-
-.plano-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 25px 0;
-}
-
-.plano-card ul li {
-    margin: 10px 0;
-}
-
-.plano-card .btn2 {
-    display: inline-block;
-    padding: 12px 25px;
-    border-radius: 30px;
-    text-decoration: none;
-    color: #000000;
-    font-weight: 500;
-}
-
-.plano-card .btn2-destaque {
-    display: inline-block;
-    padding: 12px 25px;
-    font-size: 1.5em;
-    margin-top: 20px;
-    background-color: var(--cor5);
-    border-radius: 30px;
+/* ===== TÍTULO ===== */
+.headline-plano {
+    font-family: var(--fonte-menu);
+    font-size: 2.4rem;
     text-transform: uppercase;
-    font-weight: lighter;
-    text-decoration: none;
     color: #ffffff;
-    font-weight: 500;
-    transition: transform 0.3s ease;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
 }
 
-.plano-card .btn2-destaque:hover {
-    transform: scale(1.1);
+.headline-plano span {
+    color: var(--cor1);
+    text-shadow: 0 0 15px rgba(242, 193, 46, 0.6);
 }
+
+/* ===== TEXTO ===== */
+.texto-plano {
+    font-family: var(--fonte-geral);
+    font-size: 1rem;
+    color: #d6d6d6;
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+/* ===== BLOCO DE PREÇO ===== */
+.bloco-preco {
+    padding: 28px 20px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #0c1440, #020626);
+    margin-bottom: 35px;
+    box-shadow: inset 0 0 25px rgba(42, 122, 191, 0.25);
+}
+
+/* Linha de preço */
+.linha-preco {
+    margin-bottom: 22px;
+}
+
+.label-preco {
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.valor-preco {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Preço destaque */
+.valor-preco.grande {
+    font-size: 2.8rem;
+    color: var(--cor1);
+    text-shadow: 0 0 25px rgba(242, 193, 46, 0.6);
+}
+
+.a-partir {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+/* ===== BOTÃO PREMIUM ===== */
+.btn2-destaque {
+    display: inline-block;
+    padding: 18px 42px;
+    font-family: var(--fonte-menu);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #000;
+    background: linear-gradient(135deg, var(--cor1), var(--cor2));
+    border-radius: 50px;
+    transition: var(--transition-speed);
+    box-shadow: 0 15px 35px rgba(242, 193, 46, 0.5);
+}
+
+.btn2-destaque:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(242, 193, 46, 0.7);
+}
+
+@media (max-width: 768px) {
+    .headline-plano {
+        font-size: 2rem;
+    }
+
+    .valor-preco.grande {
+        font-size: 2.1rem;
+    }
+
+    .plano-simples {
+        padding: 35px 25px;
+    }
+}
+
 
 /* ===============================
  * ESTILOS DA SEÇÃO PROFISSIONAIS
