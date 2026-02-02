@@ -61,6 +61,13 @@ async function salvarHorario(dataISO, hora) {
     });
 }
 
+// Formata data ISO (YYYY-MM-DD) para formato BR (DD/MM/YYYY)
+function formatarDataBR(dataISO) {
+  if (!dataISO) return "";
+  const [ano, mes, dia] = dataISO.split("-");
+  return `${dia}/${mes}/${ano}`;
+}
+
 /* ================= DOM ================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -114,10 +121,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       const dados = {
+        tipo: "Aula Pré-matrícula",
         nome: form.nome.value,
-        email: form.email.value,
+        cpf: form.cpf.value,
+        nascimento: formatarDataBR(form.nascimento.value),
         telefone: form.telefone.value,
-        horario: formatarDataHora(horarioSelect.value)
+        email: form.email.value,
+        objetivo: form.objetivo.value,
+        horario: formatarDataHora(horarioSelect.value),
+        termos: "Aceitou os termos"
       };
 
       await emailjs.send("service_hl3g14c", "template_zegyadw", dados);
