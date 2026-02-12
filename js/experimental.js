@@ -27,8 +27,10 @@ function gerarHorarios() {
     h.push(`${String(i).padStart(2, "0")}:00`);
     h.push(`${String(i).padStart(2, "0")}:30`);
   }
+  h.push("11:00"); // garante que não exista 11:30
   return h;
 }
+
 
 function formatarDataHora(valor) {
   const d = new Date(valor);
@@ -51,15 +53,25 @@ async function buscarOcupados(dataISO) {
 }
 
 async function salvarHorario(dataISO, hora) {
-  return db
+  const ref = db
     .collection("agendamentos")
     .doc(dataISO)
     .collection("horarios")
-    .doc(hora)
-    .set({
+    .doc(hora);
+
+  return db.runTransaction(async (transaction) => {
+    const doc = await transaction.get(ref);
+
+    if (doc.exists) {
+      throw new Error("Horário ocupado");
+    }
+
+    transaction.set(ref, {
       criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     });
+  });
 }
+
 
 // Formata data ISO (YYYY-MM-DD) para formato BR (DD/MM/YYYY)
 function formatarDataBR(dataISO) {
@@ -141,3 +153,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
+

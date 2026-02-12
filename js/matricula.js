@@ -1,18 +1,18 @@
-/* ================= FIREBASE (Configuração Correta para HTML) ================= */
+/* ================= FIREBASE ================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyARYVgimtj7_-AGclaV1qvaQRXJecyNgdM",
   authDomain: "datahora-73183.firebaseapp.com",
   projectId: "datahora-73183",
   storageBucket: "datahora-73183.firebasestorage.app",
   messagingSenderId: "70731944657",
-  appId: "1:70731944657:web:fb79aff377b126f0ed3470",
-  measurementId: "G-DVH152XWK3"
+  appId: "1:70731944657:web:fb79aff377b126f0ed3470"
 };
 
-// Inicializa o Firebase (Padrão Compat/CDN)
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
 const db = firebase.firestore();
 
 /* ================= EMAILJS ================= */
@@ -21,15 +21,16 @@ emailjs.init("P6ayYWMRJy0MVD3v2");
 
 /* ================= UTIL ================= */
 
+// Horários de 1h (07h às 20h)
 function gerarHorarios() {
-  const h = [];
-  for (let i = 7; i < 11; i++) {
-    h.push(`${String(i).padStart(2, "0")}:00`);
-    h.push(`${String(i).padStart(2, "0")}:30`);
+  const horarios = [];
+  for (let i = 7; i <= 20; i++) {
+    horarios.push(`${String(i).padStart(2, "0")}:00`);
   }
-  return h;
+  return horarios;
 }
 
+// Formata data e hora para exibição
 function formatarDataHora(valor) {
   const d = new Date(valor);
   return `${d.toLocaleDateString("pt-BR")} às ${d.toLocaleTimeString("pt-BR", {
@@ -38,44 +39,31 @@ function formatarDataHora(valor) {
   })}`;
 }
 
-/* ================= FIRESTORE ================= */
-
-async function buscarOcupados(dataISO) {
-  const snap = await db
-    .collection("agendamentos")
-    .doc(dataISO)
-    .collection("horarios")
-    .get();
-
-  return snap.docs.map(doc => doc.id);
-}
-
-async function salvarHorario(dataISO, hora) {
-  return db
-    .collection("agendamentos")
-    .doc(dataISO)
-    .collection("horarios")
-    .doc(hora)
-    .set({
-      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-    });
-}
-
-// Formata data ISO (YYYY-MM-DD) para formato BR (DD/MM/YYYY)
+// Data ISO → BR
 function formatarDataBR(dataISO) {
   if (!dataISO) return "";
   const [ano, mes, dia] = dataISO.split("-");
   return `${dia}/${mes}/${ano}`;
 }
 
+/* ================= FIRESTORE ================= */
+
+// Salva apenas como LEAD (pré-matrícula)
+async function salvarPreMatricula(dados) {
+  return db.collection("pre_matriculas").add({
+    ...dados,
+    criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+
 /* ================= DOM ================= */
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("matriculaForm");
   const horarioSelect = document.getElementById("horario");
 
-  async function carregarHorarios() {
+  function carregarHorarios() {
     horarioSelect.innerHTML = "";
 
     const hoje = new Date();
@@ -83,61 +71,59 @@ document.addEventListener("DOMContentLoaded", async () => {
     for (let d = 1; d <= 30; d++) {
       const dia = new Date();
       dia.setDate(hoje.getDate() + d);
+
+      // Bloqueia domingo
       if (dia.getDay() === 0) continue;
 
       const dataISO = dia.toISOString().split("T")[0];
-      const ocupados = await buscarOcupados(dataISO);
 
       gerarHorarios().forEach(hora => {
-        if (!ocupados.includes(hora)) {
-          const opt = document.createElement("option");
-          opt.value = `${dataISO}T${hora}`;
-          opt.textContent = `${dia.toLocaleDateString("pt-BR")} às ${hora}`;
-          horarioSelect.appendChild(opt);
-        }
+        const opt = document.createElement("option");
+        opt.value = `${dataISO}T${hora}`;
+        opt.textContent = `${dia.toLocaleDateString("pt-BR")} às ${hora}`;
+        horarioSelect.appendChild(opt);
       });
     }
   }
 
-  if (horarioSelect) await carregarHorarios();
+  if (horarioSelect) carregarHorarios();
 
   if (form) {
     form.addEventListener("submit", async e => {
       e.preventDefault();
 
       if (!horarioSelect.value) {
-        alert("⚠️ Escolha um horário.");
-        return;
-      }
-
-      const [dataISO, hora] = horarioSelect.value.split("T");
-
-      try {
-        await salvarHorario(dataISO, hora);
-      } catch {
-        alert("❌ Horário já ocupado.");
-        carregarHorarios();
+        alert("⚠️ Escolha um horário preferido.");
         return;
       }
 
       const dados = {
-        tipo: "Aula Pré-matrícula",
+        tipo: "Pré-matrícula",
         nome: form.nome.value,
         cpf: form.cpf.value,
         nascimento: formatarDataBR(form.nascimento.value),
         telefone: form.telefone.value,
         email: form.email.value,
         objetivo: form.objetivo.value,
-        horario: formatarDataHora(horarioSelect.value),
+        horarioPreferido: formatarDataHora(horarioSelect.value),
         termos: "Aceitou os termos"
       };
 
-      await emailjs.send("service_hl3g14c", "template_zegyadw", dados);
-      await emailjs.send("service_hl3g14c", "template_itda5kx", dados);
+      try {
+        await salvarPreMatricula(dados);
 
-      alert("✅ Pré-matrícula enviada!");
-      form.reset();
-      carregarHorarios();
+        await emailjs.send("service_hl3g14c", "template_zegyadw", dados);
+        await emailjs.send("service_hl3g14c", "template_itda5kx", dados);
+
+        alert("✅ Pré-matrícula enviada! Nossa equipe entrará em contato.");
+
+        form.reset();
+        carregarHorarios();
+
+      } catch (error) {
+        console.error(error);
+        alert("❌ Erro ao enviar pré-matrícula. Tente novamente.");
+      }
     });
   }
 });
