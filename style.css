@@ -2137,6 +2137,15 @@ a {
     margin: 50px auto 0;
 }
 
+.titulo-secao  {
+    font-size: 3em;
+}
+
+.subtitulo-secao {
+    font-size: 1.4em;
+    margin-top: 20px;
+}
+
 .profissional-card {
     background-color: #1f1e1ed6;
     padding: 20px;
