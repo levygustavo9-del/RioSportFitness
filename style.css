@@ -2130,8 +2130,8 @@ a {
 
 .profissionais-container {
     display: grid;
-    /* Define 3 colunas em telas grandes, com mínimo de 300px por coluna */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Define 3 colunas em telas grandes, com mínimo de 260px por coluna */
+    grid-template-columns: repeat(auto-fit, minmax(276px, 1fr));
     gap: 30px;
     max-width: 1200px;
     margin: 50px auto 0;
